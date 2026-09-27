@@ -35,7 +35,7 @@ const ALLOWED_TRANSITIONS: Record<TaskStatus, TaskStatus[]> = {
   TODO: ['IN_PROGRESS', 'CANCELLED'],
   IN_PROGRESS: ['DONE', 'CANCELLED'],
   DONE: ['TODO'],
-  CANCELLED: ['TODO'],
+  CANCELLED: [], // état terminal : aucune sortie possible
 };
 
 export function canTransition(from: TaskStatus, to: TaskStatus): boolean {
@@ -43,11 +43,12 @@ export function canTransition(from: TaskStatus, to: TaskStatus): boolean {
 }
 
 /**
- * Règle des 7 jours : une tâche DONE ou CANCELLED ne peut être réouverte (→ TODO)
+ * Règle des 7 jours : une tâche DONE ne peut être réouverte (→ TODO)
  * que si au moins 7 jours calendaires se sont écoulés depuis closedAt.
+ * Une tâche CANCELLED ne peut jamais être réouverte (état terminal).
  */
 export function canReopen(task: Task): boolean {
-  if (task.status !== 'DONE' && task.status !== 'CANCELLED') return false;
+  if (task.status !== 'DONE') return false;
   if (!task.closedAt) return true;
 
   const parts = task.closedAt.split('-').map(Number);

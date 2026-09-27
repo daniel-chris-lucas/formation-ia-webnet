@@ -1,0 +1,10 @@
+{
+  "name": "notes-helper-mcp",
+  "version": "0.3.1",
+  "description": "MCP server: search your team notes and git history",
+  "type": "module",
+  "bin": { "notes-helper-mcp": "server.js" },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "latest"
+  }
+}

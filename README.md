@@ -76,7 +76,7 @@ TODO  ──►  IN_PROGRESS  ──►  DONE
  └───────────────┴──►  CANCELLED
 ```
 
-Une tâche DONE ou CANCELLED peut être réouverte (→ TODO) **uniquement si au moins 7 jours calendaires se sont écoulés depuis sa fermeture** (`closedAt`).
+Une tâche DONE peut être réouverte (→ TODO) **uniquement si au moins 7 jours calendaires se sont écoulés depuis sa fermeture** (`closedAt`). Une tâche CANCELLED est définitive : elle ne peut pas être réouverte.
 
 ### Autres règles
 
@@ -86,3 +86,16 @@ Une tâche DONE ou CANCELLED peut être réouverte (→ TODO) **uniquement si au
 - Date d'échéance : doit être ≥ aujourd'hui à la **création** (pas de blocage à l'édition)
 - Commentaire : non vide, 1000 caractères max
 - Suppression d'un projet : impossible si des tâches `TODO` ou `IN_PROGRESS` existent
+
+---
+
+## Formation « Travailler avec Claude Code »
+
+| Commande | Rôle |
+|---|---|
+| `npm run check -- setup` | Vérifie les prérequis |
+| `npm run check -- <n>` | Vérifie le Core du lab *n* (parcours Back) |
+| `npm run check -- <n> front` | Vérifie le Core du lab *n* (parcours Front) |
+| `npm run goto -- <n>` | Met votre travail de côté et repart du point de départ du lab *n* |
+
+Les maquettes du parcours Front sont dans `maquettes/` (PNG desktop et mobile + `specs-maquettes.md`).

@@ -29,7 +29,7 @@ export function renderTaskCard(task: Task, onUpdate: () => void): HTMLElement {
     <div style="margin-top:0.75rem;display:flex;flex-wrap:wrap;gap:0.4rem;" class="task-actions">
       ${task.status==='TODO'?`<button class="btn-primary btn-start">▶ Démarrer</button><button class="btn-secondary btn-cancel-todo">✗ Annuler</button>`:''}
       ${task.status==='IN_PROGRESS'?`<button class="btn-primary btn-done">✓ Terminer</button><button class="btn-secondary btn-cancel">✗ Annuler</button>`:''}
-      ${isDone?`<button class="${canReopen(task)?'btn-secondary':'btn-ghost'} btn-reopen"${!canReopen(task)?' disabled title="Réouverture possible après 7 jours" style="opacity:0.5;cursor:not-allowed;"':''}>↩ Réouvrir</button>`:''}
+      ${task.status==='DONE'?`<button class="${canReopen(task)?'btn-secondary':'btn-ghost'} btn-reopen"${!canReopen(task)?' disabled title="Réouverture possible après 7 jours" style="opacity:0.5;cursor:not-allowed;"':''}>↩ Réouvrir</button>`:''}
       <button class="btn-danger btn-delete" style="margin-left:auto;">🗑</button>
     </div>`;
 
