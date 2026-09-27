@@ -1,7 +1,8 @@
 import type { Task } from '../types.js';
 import { canReopen } from '../services/taskService.js';
 import { formatDate, getDueState } from '../utils/date.js';
-import { PRIORITY_LABELS, STATUS_LABELS } from '../utils/labels.js';
+import { STATUS_LABELS } from '../utils/labels.js';
+import { PriorityBadgeHtml } from './PriorityBadge.js';
 
 // Carte v2 (maquettes/maquette-carte-tache-*.png) — styles : src/styles/components/_task-card.scss et _pill.scss
 const BADGES = {
@@ -40,7 +41,7 @@ export function taskCardHtml(task: Task): string {
   return `
     <div class="task-card__header">
       <h3 class="task-card__title">${task.title}</h3>
-      <span class="pill pill--${task.priority.toLowerCase()}">${PRIORITY_LABELS[task.priority]}</span>
+      ${PriorityBadgeHtml(task)}
     </div>
     ${state ? `<div>${BADGES[state]}</div>` : ''}
     ${task.description ? `<p class="task-card__desc">${task.description}</p>` : ''}
