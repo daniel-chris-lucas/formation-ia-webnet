@@ -16,13 +16,32 @@
     "PreToolUse": [
       {
         "matcher": "Edit|Write",
-        "hooks": [{ "type": "command", "command": "node .claude/hooks/protect-acceptance.mjs" }]
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/protect-acceptance.mjs"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/css-guard.mjs"
+          }
+        ]
       }
     ],
     "PostToolUse": [
       {
         "matcher": "Edit|Write",
-        "hooks": [{ "type": "command", "command": "node .claude/hooks/typecheck.mjs" }]
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/typecheck.mjs"
+          }
+        ]
       }
     ]
   }
