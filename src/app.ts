@@ -4,7 +4,6 @@ import { renderTaskCard } from './components/TaskCard.js';
 import { renderTaskForm } from './components/TaskForm.js';
 import { renderTaskEditForm } from './components/TaskEditForm.js';
 import { renderCommentSection } from './components/CommentSection.js';
-import type { Task } from './types.js';
 
 let selectedProjectId: string | null = null;
 let showTaskForm = false;

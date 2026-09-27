@@ -22,3 +22,13 @@ export function daysSince(dateStr: string): number {
 export function todayIso(): string {
   return new Date().toISOString().split('T')[0];
 }
+
+export type DueState = 'overdue' | 'today' | null;
+
+/** État d'échéance affiché sur une carte (aucun badge pour une tâche fermée). */
+export function getDueState(dueDate: string, isClosed: boolean): DueState {
+  if (isClosed) return null;
+  if (isOverdue(dueDate)) return 'overdue';
+  if (isToday(dueDate)) return 'today';
+  return null;
+}

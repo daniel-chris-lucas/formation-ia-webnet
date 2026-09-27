@@ -1,18 +1,7 @@
 import { addTask } from '../store.js';
-import { validateDueDate } from '../services/taskService.js';
+import { validateTaskInput, hasErrors } from '../services/taskService.js';
 import { todayIso } from '../utils/date.js';
-
-function validateTitle(title: string): string | null {
-  if (!title.trim()) return 'Le titre est obligatoire';
-  if (title.trim().length < 3) return 'Le titre doit faire au moins 3 caractères';
-  if (title.trim().length > 100) return 'Le titre ne peut pas dépasser 100 caractères';
-  return null;
-}
-
-function validateDescription(description: string): string | null {
-  if (description.length > 500) return 'La description ne peut pas dépasser 500 caractères';
-  return null;
-}
+import { showErrors } from './formErrors.js';
 
 export function renderTaskForm(
   container: HTMLElement,
@@ -64,21 +53,9 @@ export function renderTaskForm(
     const priority = (container.querySelector<HTMLSelectElement>('#task-priority')!).value as 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL';
     const dueDate = (container.querySelector<HTMLInputElement>('#task-due')!).value;
 
-    let valid = true;
-    const titleErr = validateTitle(title);
-    const descErr = validateDescription(description);
-    const dueErr = validateDueDate(dueDate, true);
-
-    const showErr = (id: string, msg: string | null) => {
-      const el = container.querySelector<HTMLElement>(id)!;
-      if (msg) { el.textContent = msg; el.style.display = 'block'; valid = false; }
-      else el.style.display = 'none';
-    };
-    showErr('#title-error', titleErr);
-    showErr('#desc-error', descErr);
-    showErr('#due-error', dueErr);
-
-    if (!valid) return;
+    const errors = validateTaskInput({ title, description, dueDate }, true);
+    showErrors(container, { title: '#title-error', description: '#desc-error', dueDate: '#due-error' }, errors);
+    if (hasErrors(errors)) return;
 
     addTask({ projectId, title: title.trim(), description, status: 'TODO', priority, dueDate });
     onCreated();

@@ -1,18 +1,7 @@
 import type { Task } from '../types.js';
 import { updateTask } from '../store.js';
-import { validateDueDate } from '../services/taskService.js';
-
-function validateTitle(title: string): string | null {
-  if (!title.trim()) return 'Le titre est requis';
-  if (title.trim().length < 3) return 'Le titre doit faire au moins 3 caractères';
-  if (title.trim().length > 100) return 'Le titre ne peut pas dépasser 100 caractères';
-  return null;
-}
-
-function validateDescription(description: string): string | null {
-  if (description.length > 500) return 'La description ne peut pas dépasser 500 caractères';
-  return null;
-}
+import { validateTaskInput, hasErrors } from '../services/taskService.js';
+import { showErrors } from './formErrors.js';
 
 export function renderTaskEditForm(
   container: HTMLElement,
@@ -64,19 +53,11 @@ export function renderTaskEditForm(
     const priority = (container.querySelector<HTMLSelectElement>('#edit-priority')!).value as 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL';
     const dueDate = (container.querySelector<HTMLInputElement>('#edit-due')!).value;
 
-    let valid = true;
-    const showErr = (id: string, msg: string | null) => {
-      const el = container.querySelector<HTMLElement>(id)!;
-      if (msg) { el.textContent = msg; el.style.display = 'block'; valid = false; }
-      else el.style.display = 'none';
-    };
-    showErr('#edit-title-error', validateTitle(title));
-    showErr('#edit-desc-error', validateDescription(description));
-    showErr('#edit-due-error', validateDueDate(dueDate, false));
+    const errors = validateTaskInput({ title, description, dueDate }, false);
+    showErrors(container, { title: '#edit-title-error', description: '#edit-desc-error', dueDate: '#edit-due-error' }, errors);
+    if (hasErrors(errors)) return;
 
-    if (!valid) return;
-
-    const result: any = updateTask(task.id, { title: title.trim(), description, priority, dueDate });
+    const result = updateTask(task.id, { title: title.trim(), description, priority, dueDate });
     if (result) onSaved();
   });
 }

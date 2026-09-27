@@ -39,7 +39,7 @@ export function renderCommentSection(container: HTMLElement, taskId: string): vo
     const errEl = container.querySelector<HTMLElement>('#comment-error')!;
     if (err) { errEl.textContent = err; errEl.style.display = 'block'; return; }
     errEl.style.display = 'none';
-    const result: any = addComment(taskId, content.trim());
+    const result = addComment(taskId, content.trim());
     if (result) {
       textarea.value = '';
       renderCommentSection(container, taskId);

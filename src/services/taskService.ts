@@ -29,6 +29,27 @@ export function validateComment(content: string): string | null {
   return null;
 }
 
+export interface TaskInput {
+  title: string;
+  description: string;
+  dueDate: string;
+}
+
+export type TaskInputErrors = Record<keyof TaskInput, string | null>;
+
+/** Validation centralisée des formulaires de création et d'édition de tâche. */
+export function validateTaskInput(input: TaskInput, isCreation: boolean): TaskInputErrors {
+  return {
+    title: validateTitle(input.title),
+    description: validateDescription(input.description),
+    dueDate: validateDueDate(input.dueDate, isCreation),
+  };
+}
+
+export function hasErrors(errors: TaskInputErrors): boolean {
+  return Object.values(errors).some((e) => e !== null);
+}
+
 // ── Transitions de statut ────────────────────────────────────────────────────
 
 const ALLOWED_TRANSITIONS: Record<TaskStatus, TaskStatus[]> = {

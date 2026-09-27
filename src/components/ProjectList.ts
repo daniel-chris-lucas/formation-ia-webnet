@@ -1,5 +1,5 @@
-import { getProjects, addProject, deleteProject, getTasksByProject } from '../store.js';
-import { canDeleteProject, isProjectActive } from '../services/taskService.js';
+import { getProjects, addProject, getTasksByProject } from '../store.js';
+import { isProjectActive } from '../services/taskService.js';
 
 export function renderProjectList(
   container: HTMLElement,

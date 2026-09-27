@@ -13,8 +13,8 @@ function setState(state: AppState): void {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
 }
 
-export function getAll(key: keyof AppState): any[] {
-  return getState()[key] as any[];
+export function getAll<K extends keyof AppState>(key: K): AppState[K] {
+  return getState()[key];
 }
 
 // --- Projects ---
