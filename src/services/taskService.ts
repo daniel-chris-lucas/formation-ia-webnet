@@ -104,6 +104,28 @@ export function applyTransition(task: Task, to: TaskStatus): Task {
   return updated;
 }
 
+// ── Annulation ───────────────────────────────────────────────────────────────
+
+export const MIN_CANCEL_JUSTIFICATION = 10;
+export const CANCEL_COMMENT_PREFIX = '[Annulation] ';
+
+/** Retourne la raison du refus d'annulation, ou null si l'annulation est possible. */
+export function validateCancellation(task: Task, justification: string): string | null {
+  if (!canTransition(task.status, 'CANCELLED')) return `Une tâche ${task.status} ne peut pas être annulée`;
+  if (task.priority === 'CRITICAL') return 'Une tâche CRITICAL ne peut pas être annulée : passez-la d\'abord en priorité HIGH';
+  if (justification.trim().length < MIN_CANCEL_JUSTIFICATION) {
+    return `La justification d'annulation doit faire au moins ${MIN_CANCEL_JUSTIFICATION} caractères`;
+  }
+  return null;
+}
+
+/** Annule une tâche : renvoie la tâche mise à jour et le commentaire de justification à enregistrer. */
+export function cancelTask(task: Task, justification: string): { task: Task; comment: string } {
+  const error = validateCancellation(task, justification);
+  if (error) throw new Error(error);
+  return { task: applyTransition(task, 'CANCELLED'), comment: CANCEL_COMMENT_PREFIX + justification.trim() };
+}
+
 // ── Règles de suppression projet ─────────────────────────────────────────────
 
 export function canDeleteProject(projectId: string, tasks: Task[]): boolean {

@@ -18,9 +18,15 @@ export function taskCardClass(task: Task): string {
     .filter(Boolean).join(' ');
 }
 
+function cancelButtonHtml(task: Task): string {
+  return task.priority === 'CRITICAL'
+    ? `<button class="btn-secondary" disabled title="Une tâche critique ne peut pas être annulée : passez-la d'abord en priorité haute">Annuler</button>`
+    : `<button class="btn-secondary btn-cancel">Annuler</button>`;
+}
+
 function actionsHtml(task: Task): string {
-  if (task.status === 'TODO') return `<button class="btn-primary btn-start">▶ Démarrer</button><button class="btn-secondary btn-cancel">Annuler</button>`;
-  if (task.status === 'IN_PROGRESS') return `<button class="btn-primary btn-done">✓ Terminer</button><button class="btn-secondary btn-cancel">Annuler</button>`;
+  if (task.status === 'TODO') return `<button class="btn-primary btn-start">▶ Démarrer</button>${cancelButtonHtml(task)}`;
+  if (task.status === 'IN_PROGRESS') return `<button class="btn-primary btn-done">✓ Terminer</button>${cancelButtonHtml(task)}`;
   if (task.status === 'DONE') {
     return canReopen(task)
       ? `<button class="btn-secondary btn-reopen">↩ Réouvrir</button>`
