@@ -10,7 +10,7 @@ const task = (status: TaskStatus, dueDate: string, projectId = 'p1'): Task => ({
   status, priority: 'MEDIUM', dueDate, createdAt: '2026-09-01',
 });
 
-describe.skip('Acceptation — statistiques de projet', () => {
+describe('Acceptation — statistiques de projet', () => {
   beforeEach(() => {
     vi.useFakeTimers();
     vi.setSystemTime(new Date(2026, 9, 1, 15, 0)); // 01/10/2026 15:00, heure locale
