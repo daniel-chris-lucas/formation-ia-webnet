@@ -1,0 +1,18 @@
+// Panneau statistiques — mobile-first : 2 × 2, puis 4 colonnes dès 641 px
+.stats-panel {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+
+  &__unavailable {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-meta);
+    margin-bottom: var(--space-4);
+  }
+
+  @media (min-width: 641px) {
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-4);
+  }
+}
