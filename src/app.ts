@@ -4,11 +4,14 @@ import { renderTaskCard } from './components/TaskCard.js';
 import { renderTaskForm } from './components/TaskForm.js';
 import { renderTaskEditForm } from './components/TaskEditForm.js';
 import { renderCommentSection } from './components/CommentSection.js';
+import { renderFilterBar } from './components/FilterBar.js';
+import { filterTasks, EMPTY_FILTER, type TaskFilter } from './utils/filterTasks.js';
 
 let selectedProjectId: string | null = null;
 let showTaskForm = false;
 let editingTaskId: string | null = null;
 let viewingTaskId: string | null = null;
+let taskFilter: TaskFilter = { ...EMPTY_FILTER };
 
 export function initApp(root: HTMLElement): void {
   seedIfEmpty();
@@ -50,7 +53,8 @@ function renderMain(main: HTMLElement, root: HTMLElement): void {
   const project = projects.find(p => p.id === selectedProjectId);
   if (!project) return;
 
-  const tasks = getTasksByProject(selectedProjectId);
+  const allTasks = getTasksByProject(selectedProjectId);
+  const tasks = filterTasks(allTasks, taskFilter);
 
   main.innerHTML = `
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem;">
@@ -61,6 +65,7 @@ function renderMain(main: HTMLElement, root: HTMLElement): void {
       <button id="btn-show-form" class="btn-primary">+ Nouvelle tâche</button>
     </div>
     <div id="task-form-container"></div>
+    <div id="filter-bar"></div>
     <div id="task-list"></div>
     <div id="task-detail"></div>
   `;
@@ -79,10 +84,19 @@ function renderMain(main: HTMLElement, root: HTMLElement): void {
     );
   }
 
+  renderFilterBar(main.querySelector<HTMLElement>('#filter-bar')!, taskFilter, (f) => {
+    taskFilter = f;
+    renderTaskList(main, root, filterTasks(allTasks, taskFilter), allTasks.length);
+  });
+  renderTaskList(main, root, tasks, allTasks.length);
+}
+
+function renderTaskList(main: HTMLElement, root: HTMLElement, tasks: ReturnType<typeof getTasksByProject>, totalCount: number): void {
   const listEl = main.querySelector<HTMLElement>('#task-list')!;
+  listEl.innerHTML = '';
 
   if (tasks.length === 0) {
-    listEl.innerHTML = '<p style="color:#94a3b8;font-style:italic;">Aucune tâche dans ce projet.</p>';
+    listEl.innerHTML = `<p style="color:#94a3b8;font-style:italic;">${totalCount === 0 ? 'Aucune tâche dans ce projet.' : 'Aucune tâche ne correspond aux filtres.'}</p>`;
   } else {
     tasks.forEach(task => {
       if (editingTaskId === task.id) {

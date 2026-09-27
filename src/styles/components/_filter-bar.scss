@@ -1,0 +1,31 @@
+// Barre de filtres — mobile-first : champs empilés, puis côte à côte dès 481 px
+.filter-bar {
+  display: grid;
+  gap: var(--space-3);
+  background: var(--color-surface);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  padding: var(--space-4);
+  margin-bottom: var(--space-4);
+
+  &__field { display: grid; gap: var(--space-1); }
+
+  &__label {
+    font-size: var(--font-size-meta);
+    font-weight: 600;
+    color: var(--color-text-muted);
+  }
+
+  &__input {
+    min-height: var(--touch-target);
+    background: var(--color-surface);
+    color: var(--color-text);
+
+    &:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+  }
+
+  @media (min-width: 481px) {
+    grid-template-columns: 2fr 1fr;
+    align-items: end;
+  }
+}
