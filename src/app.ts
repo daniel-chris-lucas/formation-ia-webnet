@@ -5,6 +5,7 @@ import { renderTaskForm } from './components/TaskForm.js';
 import { renderTaskEditForm } from './components/TaskEditForm.js';
 import { renderCommentSection } from './components/CommentSection.js';
 import { renderFilterBar } from './components/FilterBar.js';
+import { getProjectStats, formatStatsBanner } from './services/statsService.js';
 import { filterTasks, EMPTY_FILTER, type TaskFilter } from './utils/filterTasks.js';
 
 let selectedProjectId: string | null = null;
@@ -61,6 +62,7 @@ function renderMain(main: HTMLElement, root: HTMLElement): void {
       <div>
         <h2 style="font-size:1.4rem;color:#1e293b;font-weight:700;">${project.name}</h2>
         ${project.description ? `<p style="color:#64748b;font-size:0.9rem;margin-top:0.2rem;">${project.description}</p>` : ''}
+        <p id="project-stats" style="color:#475569;font-size:0.85rem;margin-top:0.4rem;font-weight:600;">${formatStatsBanner(getProjectStats(project.id, allTasks))}</p>
       </div>
       <button id="btn-show-form" class="btn-primary">+ Nouvelle tâche</button>
     </div>
