@@ -1,28 +1,30 @@
 # TaskFlow — CLAUDE.md
 
+Mini-application de gestion de tâches (projets, tâches, commentaires). Aucun backend : persistance LocalStorage.
+
 ## Stack
-Vite + TypeScript + Vitest. Persistance LocalStorage.
-Formatage des dates via **date-fns** (voir `src/utils/date.ts`).
+- Vite 5 + TypeScript 5.4 (strict, `noUnusedLocals`), **sans framework** (DOM natif)
+- Vitest 1.6 (environnement `node`), couverture via `@vitest/coverage-v8`
+- **Aucune dépendance runtime** : pas de librairie de date ni de validation. Ne pas en ajouter sans accord.
 
 ## Commandes
-- `npm run dev` — serveur de développement
-- `npm run test` — tests unitaires
-- `npm run test:ui` — interface graphique Vitest
-- `npm run build` — build production
+- `npm run dev` — serveur de développement (http://localhost:5173)
+- `npm test` — tests unitaires (`vitest run`)
+- `npm run test:coverage` — tests + rapport de couverture
+- `npm run build` — vérification TypeScript (`tsc`) + build Vite
 - `npm run preview` — prévisualisation du build
-- `npm run lint` — ESLint
+- Il n'y a **pas** de linter configuré.
 
 ## Architecture
-- `src/services/taskService.ts` — règles métier
-- `src/components/` — composants UI
-- `src/store.ts` — persistance LocalStorage
-- `src/router.ts` — gestion de la navigation
+- `src/main.ts` — point d'entrée, monte l'app
+- `src/app.ts` — orchestration UI : état de navigation et rendu (pas de routeur)
+- `src/store.ts` — lecture/écriture LocalStorage + données de démo (`seedIfEmpty`)
+- `src/services/taskService.ts` — règles métier : validations, transitions de statut, règle des 7 jours
+- `src/components/` — composants UI (fonctions `renderXxx(container, …)`)
+- `src/utils/date.ts` — utilitaires de date natifs ; `src/utils/ids.ts` — `crypto.randomUUID()`
+- `src/__tests__/` — tests Vitest
 
 ## Conventions
-- Les IDs sont générés avec `crypto.randomUUID()`
-- Les dates sont stockées au format ISO 8601 (`YYYY-MM-DD`)
-- La validation des formulaires utilise **Zod** (schemas dans `src/schemas/`)
-
-## Tests
-- Les tests unitaires sont dans `src/__tests__/`
-- Couverture cible : 80 % (pas encore atteinte)
+- Dates stockées en chaîne ISO `YYYY-MM-DD`
+- Validation manuelle dans `taskService.ts` : chaque fonction renvoie un message d'erreur en français ou `null`
+- Code, messages et tests en français
