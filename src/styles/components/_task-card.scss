@@ -1,0 +1,27 @@
+// Carte d'une tâche — BEM : .task-card, .task-card__element, .task-card--modificateur
+.task-card {
+  background: var(--color-surface);
+  border-radius: var(--radius-card);
+  padding: var(--space-4);
+  margin-bottom: var(--space-3);
+  box-shadow: var(--shadow-card);
+
+  &--critical { border-left: 4px solid var(--priority-critical); }
+  &--closed { opacity: 0.6; }
+
+  &__body { display: flex; align-items: flex-start; }
+  &__main { flex: 1; }
+  &__heading { display: flex; align-items: center; flex-wrap: wrap; gap: 4px; }
+  &__title { color: var(--color-text); }
+
+  &--closed &__title {
+    text-decoration: line-through;
+    color: var(--color-text-subtle);
+  }
+
+  &__desc { color: var(--color-text-muted); font-size: 0.85rem; margin-top: 0.3rem; }
+  &__meta { font-size: 0.8rem; color: var(--color-text-subtle); margin-top: var(--space-2); }
+
+  &__actions { margin-top: var(--space-3); display: flex; flex-wrap: wrap; gap: var(--space-2); }
+  &__delete { margin-left: auto; }
+}

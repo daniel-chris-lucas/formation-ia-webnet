@@ -1,0 +1,16 @@
+// Pastilles : badges d'échéance et de priorité
+.pill {
+  color: var(--color-on-primary);
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  font-size: 0.75rem;
+
+  &--overdue { background: var(--color-danger); margin-left: 8px; }
+  &--today { background: var(--color-warning); margin-left: 8px; }
+
+  &--priority { font-size: 0.72rem; }
+  &--low { background: var(--priority-low); }
+  &--medium { background: var(--priority-medium); }
+  &--high { background: var(--priority-high); }
+  &--critical { background: var(--priority-critical); }
+}

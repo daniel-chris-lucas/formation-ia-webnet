@@ -1,3 +1,4 @@
+import './styles/main.scss';
 import { initApp } from './app.js';
 
 const root = document.querySelector<HTMLElement>('#app');
