@@ -1,16 +1,19 @@
-// Pastilles : badges d'échéance et de priorité
+// Pastilles : badges d'échéance (pleins) et de priorité (fond clair)
 .pill {
-  color: var(--color-on-primary);
-  padding: 2px 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
   border-radius: var(--radius-pill);
-  font-size: 0.75rem;
+  padding: 2px var(--space-3);
+  font-size: var(--font-size-pill);
+  font-weight: 600;
+  white-space: nowrap;
 
-  &--overdue { background: var(--color-danger); margin-left: 8px; }
-  &--today { background: var(--color-warning); margin-left: 8px; }
+  &--overdue { background: var(--color-danger); color: var(--color-on-primary); }
+  &--today { background: var(--color-warning); color: var(--color-on-primary); }
 
-  &--priority { font-size: 0.72rem; }
-  &--low { background: var(--priority-low); }
-  &--medium { background: var(--priority-medium); }
-  &--high { background: var(--priority-high); }
-  &--critical { background: var(--priority-critical); }
+  &--low { background: var(--color-neutral-bg); color: var(--color-text-muted); }
+  &--medium { background: var(--color-info-bg); color: var(--color-info-text); }
+  &--high { background: var(--color-warning-bg); color: var(--color-warning-text); }
+  &--critical { background: var(--color-danger-bg); color: var(--color-danger-text); }
 }

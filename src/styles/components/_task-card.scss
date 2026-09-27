@@ -1,27 +1,94 @@
-// Carte d'une tâche — BEM : .task-card, .task-card__element, .task-card--modificateur
+// Carte d'une tâche v2 — maquettes/maquette-carte-tache-*.png
+// BEM, mobile-first : base = mobile (≤ 480 px), puis @media (min-width: 481px)
 .task-card {
+  display: grid;
+  gap: var(--space-3);
   background: var(--color-surface);
   border-radius: var(--radius-card);
-  padding: var(--space-4);
-  margin-bottom: var(--space-3);
+  border-left: 4px solid var(--priority-medium);
   box-shadow: var(--shadow-card);
+  padding: var(--space-4);
+  margin-bottom: var(--space-4);
 
-  &--critical { border-left: 4px solid var(--priority-critical); }
+  &--low { border-left-color: var(--priority-low); }
+  &--medium { border-left-color: var(--priority-medium); }
+  &--high { border-left-color: var(--priority-high); }
+  &--critical { border-left-color: var(--priority-critical); }
   &--closed { opacity: 0.6; }
 
-  &__body { display: flex; align-items: flex-start; }
-  &__main { flex: 1; }
-  &__heading { display: flex; align-items: center; flex-wrap: wrap; gap: 4px; }
-  &__title { color: var(--color-text); }
-
-  &--closed &__title {
-    text-decoration: line-through;
-    color: var(--color-text-subtle);
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--space-3);
   }
 
-  &__desc { color: var(--color-text-muted); font-size: 0.85rem; margin-top: 0.3rem; }
-  &__meta { font-size: 0.8rem; color: var(--color-text-subtle); margin-top: var(--space-2); }
+  &__title {
+    font-size: var(--font-size-title);
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--color-text);
+  }
 
-  &__actions { margin-top: var(--space-3); display: flex; flex-wrap: wrap; gap: var(--space-2); }
-  &__delete { margin-left: auto; }
+  &--closed &__title { text-decoration: line-through; }
+
+  &__desc {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-body);
+    line-height: 1.5;
+  }
+
+  &__footer {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-3);
+    border-top: 1px solid var(--color-border);
+    padding-top: var(--space-3);
+  }
+
+  &__meta {
+    display: flex;
+    gap: var(--space-3);
+    align-items: center;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-meta);
+  }
+
+  &__status { font-weight: 600; color: var(--color-text); }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+
+    > button {
+      min-height: var(--touch-target);
+      padding: var(--space-2) var(--space-4);
+      border-radius: var(--radius-control);
+      font-weight: 600;
+    }
+
+    > .btn-primary,
+    > .btn-secondary { flex: 1; }
+  }
+
+  &__delete {
+    width: var(--touch-target);
+    padding: 0;
+  }
+
+  @media (min-width: 481px) {
+    padding: var(--space-4) var(--space-6);
+
+    &__footer {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    &__actions > .btn-primary,
+    &__actions > .btn-secondary { flex: none; }
+  }
 }

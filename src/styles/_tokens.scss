@@ -1,38 +1,61 @@
-// Design tokens TaskFlow — CSS custom properties nommées par RÔLE.
-// Seul fichier autorisé à contenir des couleurs en dur.
+// Design tokens TaskFlow — source : maquettes/specs-maquettes.md
+// CSS custom properties nommées par RÔLE. Seul fichier autorisé à contenir des couleurs en dur.
 :root {
-  // Couleurs
-  --color-primary: #3b82f6;
+  // Couleurs de base
+  --color-primary: #2563eb;
   --color-on-primary: #fff;
-  --color-danger: #ef4444;
-  --color-warning: #f97316;
-  --color-text: #1e293b;
-  --color-text-body: #333;
-  --color-text-muted: #64748b;
-  --color-text-subtle: #94a3b8;
-  --color-bg: #f5f5f5;
+  --color-text: #0f172a;
+  --color-text-body: #0f172a;
+  --color-text-muted: #475569;
+  --color-text-subtle: #475569;
+  --color-border: #e2e8f0;
+  --color-border-input: #cbd5e1;
+  --color-bg: #f1f5f9;
   --color-surface: #fff;
-  --color-secondary-bg: #e2e8f0;
-  --color-border-input: #d1d5db;
+  --color-secondary-bg: #fff;
   --color-sidebar: #1e293b;
   --color-on-sidebar: #fff;
+  --color-on-sidebar-muted: #94a3b8; // 5,7:1 sur --color-sidebar
 
-  // Priorités
-  --priority-low: #94a3b8;
-  --priority-medium: #3b82f6;
-  --priority-high: #f97316;
-  --priority-critical: #ef4444;
+  // États
+  --color-danger: #dc2626;
+  --color-danger-bg: #fef2f2;
+  --color-danger-text: #b91c1c;
+  --color-warning: #c2410c;
+  --color-warning-bg: #fff7ed;
+  --color-warning-text: #9a3412;
+  --color-success: #15803d;
+  --color-info-bg: #eff6ff;
+  --color-info-text: #1d4ed8;
+  --color-neutral-bg: #f1f5f9;
+
+  // Priorités (bordure gauche des cartes)
+  --priority-low: #475569;
+  --priority-medium: #2563eb;
+  --priority-high: #c2410c;
+  --priority-critical: #dc2626;
 
   // Formes
-  --radius-control: 4px;
-  --radius-card: 8px;
-  --radius-pill: 10px;
-  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --radius-control: 8px;
+  --radius-card: 12px;
+  --radius-pill: 999px;
+  --shadow-card: 0 1px 2px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.1);
+  --focus-ring: 0 0 0 3px rgba(37, 99, 235, 0.4);
 
-  // Espacements
+  // Espacements (4 · 8 · 12 · 16 · 24 · 32 px)
   --space-1: 0.25rem;
-  --space-2: 0.4rem;
+  --space-2: 0.5rem;
   --space-3: 0.75rem;
   --space-4: 1rem;
   --space-6: 1.5rem;
+  --space-8: 2rem;
+
+  // Typo
+  --font-size-title: 1.125rem;
+  --font-size-body: 0.9375rem;
+  --font-size-meta: 0.875rem;
+  --font-size-pill: 0.75rem;
+
+  // Cibles tactiles
+  --touch-target: 2.5rem; // 40 px
 }

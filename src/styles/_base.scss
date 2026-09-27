@@ -2,7 +2,7 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  font-family: system-ui, sans-serif;
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
   background: var(--color-bg);
   color: var(--color-text-body);
 }
@@ -12,7 +12,7 @@ body {
 h1 {
   font-size: 1.2rem;
   font-weight: 700;
-  color: var(--color-text-subtle);
+  color: var(--color-on-sidebar-muted); // le h1 est dans la sidebar sombre
   margin-bottom: var(--space-6);
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -26,6 +26,7 @@ button {
   font-size: 0.85rem;
 
   &:disabled { opacity: 0.5; cursor: not-allowed; }
+  &:focus-visible { outline: none; box-shadow: var(--focus-ring); }
 }
 
 input, textarea, select {
@@ -38,5 +39,6 @@ input, textarea, select {
 
 .btn-primary { background: var(--color-primary); color: var(--color-on-primary); }
 .btn-danger { background: var(--color-danger); color: var(--color-on-primary); }
-.btn-secondary { background: var(--color-secondary-bg); color: var(--color-text-body); }
+.btn-secondary { background: var(--color-secondary-bg); color: var(--color-text-body); border: 1px solid var(--color-border); }
+.btn-icon { background: var(--color-surface); color: var(--color-danger); border: 1px solid var(--color-border); }
 .btn-ghost { background: transparent; color: var(--color-text-muted); text-decoration: underline; }
