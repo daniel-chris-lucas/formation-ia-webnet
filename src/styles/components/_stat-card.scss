@@ -1,0 +1,48 @@
+// Carte KPI — maquettes/maquette-stats-*.png
+.stat-card {
+  display: grid;
+  gap: var(--space-2);
+  align-content: start;
+  background: var(--color-surface);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  padding: var(--space-4);
+
+  &__label {
+    font-size: var(--font-size-meta);
+    font-weight: 500;
+    color: var(--color-text-muted);
+  }
+
+  &__value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--color-text);
+  }
+
+  &--danger &__value { color: var(--color-danger-text); }
+
+  &__progress {
+    height: 0.5rem;
+    background: var(--color-border);
+    border-radius: var(--radius-pill);
+    overflow: hidden;
+  }
+
+  // Seule valeur dynamique : la largeur, passée en custom property (--progress) depuis le TS
+  &__progress-bar {
+    height: 100%;
+    width: var(--progress, 0%);
+    background: var(--color-success);
+  }
+
+  &__hint {
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+  }
+
+  @media (min-width: 641px) {
+    &__value { font-size: 2rem; }
+  }
+}
