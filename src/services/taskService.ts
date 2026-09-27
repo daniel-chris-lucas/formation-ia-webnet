@@ -1,4 +1,5 @@
 import type { Task, TaskStatus } from '../types.js';
+import { todayIso } from '../utils/date.js';
 
 // ── Validation ──────────────────────────────────────────────────────────────
 
@@ -17,8 +18,7 @@ export function validateDescription(description: string): string | null {
 export function validateDueDate(dueDate: string, isCreation: boolean): string | null {
   if (!dueDate) return "La date d'échéance est obligatoire";
   if (isCreation) {
-    const today = new Date().toISOString().split('T')[0];
-    if (dueDate < today) return "La date d'échéance doit être aujourd'hui ou dans le futur";
+    if (dueDate < todayIso()) return "La date d'échéance doit être aujourd'hui ou dans le futur";
   }
   return null;
 }
@@ -72,7 +72,8 @@ export function canReopen(task: Task): boolean {
   if (task.status !== 'DONE') return false;
   if (!task.closedAt) return true;
 
-  const parts = task.closedAt.split('-').map(Number);
+  // closedAt est une date ISO « YYYY-MM-DD » ; on tolère un horodatage complet (données anciennes).
+  const parts = task.closedAt.slice(0, 10).split('-').map(Number);
   const year = parts[0];
   const month = parts[1];
   const day = parts[2];
@@ -94,7 +95,7 @@ export function applyTransition(task: Task, to: TaskStatus): Task {
   const updated: Task = { ...task, status: to };
 
   if (to === 'DONE' || to === 'CANCELLED') {
-    updated.closedAt = new Date().toISOString();
+    updated.closedAt = todayIso(); // format « YYYY-MM-DD », attendu par canReopen
   }
   if (to === 'TODO') {
     updated.closedAt = undefined;

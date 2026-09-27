@@ -1,10 +1,12 @@
+// Les dates métier sont des chaînes « YYYY-MM-DD » en heure LOCALE.
+// ⚠️ new Date('YYYY-MM-DD') les interprète à minuit UTC, et toISOString() renvoie la date UTC :
+// on compare donc des chaînes ISO locales (l'ordre lexicographique = l'ordre chronologique).
 export function isOverdue(dueDate: string): boolean {
-  return new Date(dueDate) < new Date();
+  return dueDate < todayIso();
 }
 
 export function isToday(dueDate: string): boolean {
-  const today = new Date().toISOString().split('T')[0];
-  return dueDate === today;
+  return dueDate === todayIso();
 }
 
 export function formatDate(dateStr: string): string {
@@ -19,8 +21,12 @@ export function daysSince(dateStr: string): number {
   return Math.floor(diff / (1000 * 60 * 60 * 24));
 }
 
+export function toLocalIso(d: Date): string {
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+}
+
 export function todayIso(): string {
-  return new Date().toISOString().split('T')[0];
+  return toLocalIso(new Date());
 }
 
 export type DueState = 'overdue' | 'today' | null;

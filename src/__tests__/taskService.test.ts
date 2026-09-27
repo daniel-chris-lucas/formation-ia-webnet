@@ -1,11 +1,12 @@
 import { describe, it, expect } from 'vitest';
 import { canTransition, canReopen, applyTransition } from '../services/taskService.js';
 import type { Task } from '../types.js';
+import { toLocalIso } from '../utils/date.js';
 
 function daysAgo(n: number): string {
   const d = new Date();
   d.setDate(d.getDate() - n);
-  return d.toISOString();
+  return toLocalIso(d);
 }
 
 function makeClosedTask(closedAt: string, status: 'DONE' | 'CANCELLED' = 'DONE'): Task {
@@ -82,14 +83,14 @@ describe('applyTransition', () => {
     expect(result.status).toBe('IN_PROGRESS');
   });
 
-  it('renseigne closedAt lors du passage à DONE', () => {
+  it('renseigne closedAt au format YYYY-MM-DD lors du passage à DONE', () => {
     const task: Task = {
       id: 't', projectId: 'p', title: 'T', description: '',
       status: 'IN_PROGRESS', priority: 'MEDIUM',
       dueDate: '2026-06-01', createdAt: '2026-01-01',
     };
     const result = applyTransition(task, 'DONE');
-    expect(result.closedAt).toBeDefined();
+    expect(result.closedAt).toMatch(/^\d{4}-\d{2}-\d{2}$/);
   });
 
   it('lève une erreur pour une transition invalide', () => {
