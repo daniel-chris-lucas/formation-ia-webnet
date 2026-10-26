@@ -14,7 +14,7 @@ Mini-application de gestion de tâches construite avec Vite et TypeScript. Elle 
 ## Installation
 
 ```bash
-git clone https://github.com/webnet-training/taskflow
+git clone https://github.com/daniel-chris-lucas/formation-ia-webnet.git taskflow
 cd taskflow
 npm install
 npm run dev
